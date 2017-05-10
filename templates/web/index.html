@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FETraining</title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    {% load staticfiles %}
+    <script src="{% static "web/index.js" %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+</head>
+<body>
+<form method="POST" action="/login/login/google-oauth2/">
+    {% csrf_token %}
+    <button type="submit" id="login_btn" name="login_btn">sign in</button>
+</form>
+
+</body>
+</html>
