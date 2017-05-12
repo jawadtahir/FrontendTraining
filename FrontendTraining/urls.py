@@ -15,18 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.generic.base import TemplateView
 
-from FETraining import views
+from FrontendTraining import views
 
 urlpatterns = [
-    url(
-        r'^$', TemplateView.as_view(
-            template_name="web/index.html"
-        ), name="home"
-    ),
+    url(r'^$', views.index),
     url(r'^admin/', admin.site.urls),
-    # url(r'^abc/', include("FETraining.urls")),
+    url(r'^book/', include("FETraining.urls")),
     url(r'^accounts/profile/$', views.login_view),
-    url(r'^login/', include("social_django.urls", namespace="social"))
+    url(r'^login/', include("social_django.urls", namespace="social")),
+    url(r'^logout/$', views.user_logout)
 ]

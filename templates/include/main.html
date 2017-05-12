@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>FETraining</title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="{% static "web/index.js" %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
+    <script src="https://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
+</head>
+<body>
+<div id="nav_bar">
+    <a href="/book/author/">Authors</a>
+    <a href="/book/publisher/">Publishers</a>
+    <a href="/book/book/">Books</a>
+</div>
+{% block content %}
+
+{% endblock %}
+{% block footer %}
+
+{% endblock %}
+</body>
+</html>

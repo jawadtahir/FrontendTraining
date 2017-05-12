@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -15,6 +16,9 @@ class Name (models.Model):
     first_name = models.CharField(max_length=50, blank=False)
     last_name = models.CharField(max_length=50, blank=False)
 
+    class Meta:
+        db_table = "Name"
+
     def __str__(self):
         return self.salutation.join(" ") if self.salutation else "" + \
                                                                  "%s %s" % \
@@ -27,6 +31,9 @@ class Author(models.Model):
     name = models.ForeignKey(Name)
     date_of_birth = models.DateField(blank=True)
 
+    class Meta:
+        db_table = "Author"
+
     def __str__(self):
         return self.name
 
@@ -35,6 +42,9 @@ class Publisher(models.Model):
     name = models.CharField(max_length=50)
     website = models.URLField(blank=True)
     country = models.CharField(max_length=30)
+
+    class Meta:
+        db_table = "Publisher"
 
     def __str__(self):
         return "%s of %s" % (self.name, self.country)
@@ -52,10 +62,14 @@ class Contact(models.Model):
     contact_method = models.CharField(
         max_length=2, choices=contact_method_options
     )
+    active = models.BinaryField(default=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True)
     publisher = models.ForeignKey(
         Publisher, on_delete=models.CASCADE, null=True
     )
+
+    class Meta:
+        db_table = "Contact"
 
     def __str__(self):
         return (
@@ -68,6 +82,10 @@ class Book(models.Model):
     name = models.TextField()
     authors = models.ManyToManyField(Author)
     publisher = models.ForeignKey(Publisher)
+    user = models.ForeignKey(User)
+
+    class Meta:
+        db_table = "Book"
 
     def __str__(self):
         return "%s by %s" % (self.name, self.authors.first())
