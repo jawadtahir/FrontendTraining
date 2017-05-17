@@ -5,16 +5,23 @@ from django.utils.decorators import method_decorator
 from rest_framework.generics import ListCreateAPIView, \
     RetrieveUpdateDestroyAPIView
 
-from FETraining.models import Author, Book, Publisher
+from FETraining.models import Author, Book, Name, Publisher
 from FETraining.serializer import AuthorSerializer, BookSerializer, \
     PublisherSerializer
 
 
-# @method_decorator(login_required(login_url="/"), 'get')
-# @method_decorator(login_required(login_url="/"), 'post')
+@method_decorator(login_required(login_url="/"), 'get')
+@method_decorator(login_required(login_url="/"), 'post')
 class AuthorListCreateAPIView(ListCreateAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+
+    def get(self, request, *args, **kwargs):
+        author_list = super.get(self, request, *args, **kwargs)
+        salutation_list = Name.get_salutations()
+        (author_list.rendering_attrs['context_data'])['salutation_list'] = \
+            salutation_list
+        return author_list
 
 
 @method_decorator(login_required(login_url="/"), 'get')
@@ -26,8 +33,8 @@ class AuthorRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = AuthorSerializer
 
 
-# @method_decorator(login_required(login_url="/"), 'get')
-# @method_decorator(login_required(login_url="/"), 'post')
+@method_decorator(login_required(login_url="/"), 'get')
+@method_decorator(login_required(login_url="/"), 'post')
 class PublisherListCreateAPIView(ListCreateAPIView):
     queryset = Publisher.objects.all()
     serializer_class = PublisherSerializer
@@ -42,8 +49,8 @@ class PublisherRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = PublisherSerializer
 
 
-# @method_decorator(login_required(login_url="/"), 'get')
-# @method_decorator(login_required(login_url="/"), 'post')
+@method_decorator(login_required(login_url="/"), 'get')
+@method_decorator(login_required(login_url="/"), 'post')
 class BookListCreateAPIView(ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
@@ -64,3 +71,6 @@ class BookListCreateAPIView(ListCreateAPIView):
 class BookRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+    def get_queryset(self):
+        return Book.objects.filter(user=self.request.user)

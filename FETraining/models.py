@@ -8,7 +8,7 @@ class Name (models.Model):
         ('Mr', 'Mr'),
         ('Mrs', 'Mrs'),
         ('Dr', 'Dr'),
-        ('Dr', 'Dr')
+        ('Prof', 'Prof')
     )
     salutation = models.CharField(
         max_length=10, choices=_salutation_option, blank=True
@@ -26,9 +26,13 @@ class Name (models.Model):
                                                                   self.last_name
                                                                   )
 
+    @classmethod
+    def get_salutations(cls):
+        return cls._salutation_option
+
 
 class Author(models.Model):
-    name = models.ForeignKey(Name)
+    name = models.OneToOneField(Name, on_delete=models.CASCADE)
     date_of_birth = models.DateField(blank=True)
 
     class Meta:
@@ -39,7 +43,7 @@ class Author(models.Model):
 
 
 class Publisher(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.OneToOneField(Name, on_delete=models.CASCADE)
     website = models.URLField(blank=True)
     country = models.CharField(max_length=30)
 
@@ -51,16 +55,16 @@ class Publisher(models.Model):
 
 
 class Contact(models.Model):
-    contact_method_options = (
+    _contact_method_options = (
         ("HP", "Home Phone"),
         ("OP", "Office Phone"),
         ("MP", "Mobile Phone")
     )
-    country_code = models.IntegerField(blank=True)
+    country_code = models.IntegerField(blank=True, null=True)
     carrier_code = models.IntegerField()
     contact_number = models.IntegerField()
     contact_method = models.CharField(
-        max_length=2, choices=contact_method_options
+        max_length=2, choices=_contact_method_options
     )
     active = models.BinaryField(default=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True)
@@ -70,6 +74,9 @@ class Contact(models.Model):
 
     class Meta:
         db_table = "Contact"
+
+    def get_contact_method_option(self):
+        return self._contact_method_options
 
     def __str__(self):
         return (

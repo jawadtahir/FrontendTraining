@@ -1,0 +1,18 @@
+{% extends "web/index.html" %}
+{% block content %}
+    {% if request.user.autheticated %}
+        <form id="author_form">
+            <select id="author_salutation">
+                {% for salutation in salutation_list %}
+                    <option value="{{ salutation.0 }}">{{ salutation.1 }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" id="author_first_name" maxlength="50">
+            <label for="author_first_name">First Name:</label>
+            <input type="text" id="author_last_name" maxlength="50">
+            <label for="author_last_name">Last Name:</label>
+            <br>
+
+        </form>
+    {% endif %}
+{% endblock %}
