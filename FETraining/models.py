@@ -20,11 +20,7 @@ class Name (models.Model):
         db_table = "Name"
 
     def __str__(self):
-        return self.salutation.join(" ") if self.salutation else "" + \
-                                                                 "%s %s" % \
-                                                                 (self.first_name,
-                                                                  self.last_name
-                                                                  )
+        return "%s %s" % (self.first_name, self.last_name)
 
     @classmethod
     def get_salutations(cls):

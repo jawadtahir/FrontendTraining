@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'FETraining.apps.FetrainingConfig',
-    'social_django'
+    'social_django',
+    'rest_framework'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'FrontendTraining.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {

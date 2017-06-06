@@ -1,18 +1,29 @@
 from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
-from FETraining.models import Author, Book, Publisher
+from FETraining.models import Author, Book, Publisher, Name, Contact
 
 
-class AuthorSerializer(serializers.ModelSerializer):
+class NameSerializer(ModelSerializer):
+    class Meta:
+        model = Name
+
+
+class ContactSerializer(ModelSerializer):
+    class Meta:
+        model = Contact
+
+
+class AuthorSerializer(ModelSerializer):
     class Meta:
         model = Author
 
 
-class PublisherSerializer(serializers.ModelSerializer):
+class PublisherSerializer(ModelSerializer):
     class Meta:
         model = Publisher
 
 
-class BookSerializer(serializers.ModelSerializer):
+class BookSerializer(ModelSerializer):
     class Meta:
         model = Book

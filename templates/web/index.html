@@ -10,8 +10,6 @@
     {% else %}
         <form method="GET" action="/login/login/google-oauth2/">
             {% csrf_token %}
-            <input id="next" name="next" value="{{ request.get_full_path }}"
-                   style="display: inline"/>
             <button type="submit" id="login_btn" name="login_btn">sign in
             </button>
         </form>

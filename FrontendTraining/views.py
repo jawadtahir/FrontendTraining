@@ -2,12 +2,12 @@ from traceback import print_exc
 
 from django.contrib.auth import logout
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def login_view(httpRequest):
     response = HttpResponse()
-    return response
+    return redirect('/')
 
 
 def index(request):
@@ -26,4 +26,4 @@ def user_logout(request):
         logout(request)
     except:
         print_exc()
-    return render(request, "web/index.html", {})
+    return redirect('/')
